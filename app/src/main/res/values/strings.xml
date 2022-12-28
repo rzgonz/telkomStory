@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TopStories</string>
+    <string name="label_desc">DesKripsi :</string>
+    <string name="label_komentar">Komentar</string>
+</resources>

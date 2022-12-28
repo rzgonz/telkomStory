@@ -1,0 +1,43 @@
+
+android {
+
+    compileSdkVersion Versions.compileSdk
+    buildToolsVersion Versions.buildTools
+
+    defaultConfig {
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+
+        testInstrumentationRunner project.TestInstrumentationRunner
+        consumerProguardFiles project.ConsumerProguardFiles
+    }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+
+}
+
+
+dependencies {
+    implementation Libraries.fragment
+    implementation Libraries.kotlin
+    implementation Libraries.coreKtx
+
+    //koin
+    implementation Libraries.koin
+
+    //network
+    implementation Libraries.retrofit
+    implementation Libraries.retrofitGson
+    implementation Libraries.gson
+    implementation Libraries.okHttp3
+    implementation Libraries.okHttp3Log
+    testImplementation TestLibraries.junit
+}
