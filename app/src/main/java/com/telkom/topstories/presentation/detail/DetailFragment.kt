@@ -1,10 +1,12 @@
-package com.telkom.topstories.ui.detail
+package com.telkom.topstories.presentation.detail
 
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,18 +16,16 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.telkom.topstories.R
 import com.telkom.topstories.domain.dto.CommentDto
 import com.telkom.topstories.domain.dto.StoryDto
-import com.telkom.topstories.ui.main.MainViewModel
 import com.telkom.topstories.utils.DiffCallback
 import com.telkom.topstories.utils.GenericRecyclerAdapter
 
 class DetailFragment : Fragment() {
 
-    private val argDetail:StoryDto by lazy {
+    private val argDetail: StoryDto by lazy {
         arguments?.getParcelable(DETAIL_ARGS) ?: StoryDto()
     }
 
     private val viewModel: DetailViewModel by viewModels()
-
 
     private val adapterStory by lazy {
         GenericRecyclerAdapter<CommentDto>(
@@ -56,14 +56,41 @@ class DetailFragment : Fragment() {
         view?.findViewById<RecyclerView>(R.id.recyclerViewStory)
     }
 
+    private val checkBoxFavStory by lazy {
+        view?.findViewById<CheckBox>(R.id.checkBoxFav)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<View>(R.id.message).setOnClickListener {
-
-        }
         subscribeListComment()
         subscribeIsLoading()
+        subscribeFavStory()
         initViewData()
+        setupData()
+        setupFavCheckBox()
+    }
+
+    private fun setupFavCheckBox() {
+        checkBoxFavStory?.setOnCheckedChangeListener { _ , b ->
+            if (b) {
+                viewModel.saveFavStory(argDetail)
+            }else{
+                viewModel.saveFavStory(StoryDto())
+            }
+        }
+    }
+
+    private fun subscribeFavStory() {
+        viewModel.liveDataFavStory.let {
+            checkBoxFavStory?.isChecked = it.id == argDetail.id
+        }
+    }
+
+    private fun setupData() {
+        view?.findViewById<TextView>(R.id.textViewTitle)?.text = argDetail.title
+        view?.findViewById<TextView>(R.id.textViewBy)?.text = "By: ${argDetail.by}"
+        view?.findViewById<TextView>(R.id.textViewDate)?.text = argDetail.time
+        view?.findViewById<WebView>(R.id.textViewDesc)?.loadUrl(argDetail.url)
     }
 
     private fun initViewData() {
@@ -76,14 +103,13 @@ class DetailFragment : Fragment() {
 
     private fun subscribeIsLoading() {
         viewModel.liveDataIsLoading.observe(viewLifecycleOwner) {
-            progressBar?.visibility = if (it) View.VISIBLE else View.GONE
+            progressBar?.visibility = if (it) View.VISIBLE else View.INVISIBLE
         }
     }
 
     private fun subscribeListComment() {
         viewModel.liveDataStory.observe(viewLifecycleOwner) {
             adapterStory.setData(it)
-            view?.findViewById<TextView>(R.id.message)?.text = "SIZE LIST = ${it.size}"
         }
     }
 

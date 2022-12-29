@@ -7,8 +7,8 @@ import com.telkom.topstories.domain.dto.StoryDto
 import com.telkom.topstories.ext.addFragment
 import com.telkom.topstories.ext.replaceFragment
 import com.telkom.topstories.navigation.StoryScreenNavigator
-import com.telkom.topstories.ui.detail.DetailFragment
-import com.telkom.topstories.ui.main.MainFragment
+import com.telkom.topstories.presentation.detail.DetailFragment
+import com.telkom.topstories.presentation.main.MainFragment
 
 class MainActivity : AppCompatActivity(), StoryScreenNavigator {
 
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), StoryScreenNavigator {
     }
 
     override fun navigateToDetail(story: StoryDto) {
-        addFragment<DetailFragment>(
+        replaceFragment<DetailFragment>(
             containerViewId = R.id.container,
             data = bundleOf(
                 DetailFragment.DETAIL_ARGS to story

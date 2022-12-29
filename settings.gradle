@@ -16,3 +16,4 @@ rootProject.name = "TopStories"
 include ':app'
 include ':shared:network'
 include ':shared:common'
+include ':shared:presistance'

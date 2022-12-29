@@ -1,4 +1,4 @@
-package com.telkom.topstories.network
+package com.telkom.topstories.data.remote
 
 import com.telkom.topstories.data.remote.response.CommentResponse
 import com.telkom.topstories.data.remote.response.StoryResponse

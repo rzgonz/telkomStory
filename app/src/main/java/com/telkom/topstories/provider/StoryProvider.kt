@@ -3,11 +3,12 @@ package com.telkom.topstories.provider
 
 import com.telkom.common.clazz
 import com.telkom.common.provider.BaseModuleProvider
+import com.telkom.topstories.data.local.StoryLocalDataSource
 import com.telkom.topstories.domain.StoryInteractor
 import com.telkom.topstories.domain.StoryInteractorImpl
 import com.telkom.topstories.domain.StoryRepository
-import com.telkom.topstories.network.StoryRemoteDataSource
-import com.telkom.topstories.network.StoryWebServices
+import com.telkom.topstories.data.remote.StoryRemoteDataSource
+import com.telkom.topstories.data.remote.StoryWebServices
 import org.koin.core.module.Module
 import org.koin.dsl.binds
 import org.koin.dsl.module
@@ -28,8 +29,14 @@ class StoryProvider private constructor() : BaseModuleProvider {
         }
 
         single {
-            StoryRepository(storyRemoveDataSource = get())
+            StoryLocalDataSource(basePreference = get())
         }
+
+        single {
+            StoryRepository(storyRemoveDataSource = get(), localDataSource = get())
+        }
+
+
     }
 
     private val interactorModule = module {

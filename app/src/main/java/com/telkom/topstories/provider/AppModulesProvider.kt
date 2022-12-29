@@ -4,6 +4,7 @@ package com.telkom.topstories.provider
 import com.telkom.common.clazz
 import com.telkom.common.config.CommonBuildConfigProvider
 import com.telkom.network.NetworkProvider
+import com.telkom.presistance.PersistenceProvider
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -18,6 +19,7 @@ class AppModulesProvider private constructor(
             return ArrayList<Module>().apply {
                 addAll(commonBuildConfigModules)
                 addAll(networkModules)
+                addAll(persistenceProvider)
             }
         }
 
@@ -31,9 +33,9 @@ class AppModulesProvider private constructor(
         NetworkProvider.getInstance().modules
     }
 
-//    private val persistenceProvider by lazy {
-//        PersistenceProvider.getInstance().modules
-//    }
+    private val persistenceProvider by lazy {
+        PersistenceProvider.getInstance().modules
+    }
 
 
 

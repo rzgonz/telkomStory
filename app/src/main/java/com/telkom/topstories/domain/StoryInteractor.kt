@@ -7,4 +7,6 @@ interface StoryInteractor {
     suspend fun getTopStory(): List<String>
     suspend fun getStory(storyId: String): StoryDto
     suspend fun getComment(commentId: String): CommentDto
+    fun getFavStory():StoryDto
+    fun setFavStory(storyDto: StoryDto)
 }

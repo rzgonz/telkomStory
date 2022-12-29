@@ -5,7 +5,7 @@ import com.telkom.topstories.domain.dto.StoryDto
 
 class StoryInteractorImpl(
     private val storyRepository: StoryRepository
-):StoryInteractor {
+) : StoryInteractor {
     override suspend fun getTopStory(): List<String> {
         return storyRepository.getTopStory()
     }
@@ -16,5 +16,11 @@ class StoryInteractorImpl(
 
     override suspend fun getComment(commentId: String): CommentDto {
         return StoryDataMapper.commentResponseToDto(storyRepository.getComment(commentId))
+    }
+
+    override fun getFavStory(): StoryDto = storyRepository.storyFav
+
+    override fun setFavStory(storyDto: StoryDto) {
+        storyRepository.storyFav = storyDto
     }
 }

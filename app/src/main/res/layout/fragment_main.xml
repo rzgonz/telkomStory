@@ -5,29 +5,32 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.MainFragment">
+    android:background="@color/white"
+    tools:context=".presentation.main.MainFragment">
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentInsetEnd="0dp"
             android:background="@color/canva"
+            app:contentInsetEnd="0dp"
             app:contentInsetStart="0dp">
+
             <TextView
                 android:id="@+id/titleHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Top Stories"
-                android:textAllCaps="true"
-                android:textStyle="bold"
-                android:textSize="21sp"
                 android:textAlignment="center"
-                />
+                android:textAllCaps="true"
+                android:textSize="21sp"
+                android:textStyle="bold" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -36,33 +39,35 @@
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/progress_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="16dp"
-        app:layout_constraintBottom_toBottomOf="@id/appBar"
-        app:indicatorColor="@color/red"
-        app:trackColor="@color/canva"
+        android:layout_height="wrap_content"
         android:indeterminate="true"
-        />
+        app:indicatorColor="@color/red"
+        app:layout_constraintTop_toBottomOf="@id/appBar"
+        app:trackColor="@color/canva" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewStory"
-        app:layout_constraintTop_toBottomOf="@id/progress_horizontal"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/story_view_cell"
-        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
-        tools:itemCount="100"
-        />
-    <TextView
-        android:id="@+id/message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MainFragment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/progress_horizontal">
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include  layout="@layout/story_view_headerl" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewStory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingBottom="100dp"
+                app:spanCount="2"
+                tools:itemCount="100"
+                tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:listitem="@layout/story_view_cell" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
